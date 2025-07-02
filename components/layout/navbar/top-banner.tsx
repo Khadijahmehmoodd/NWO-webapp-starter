@@ -6,20 +6,19 @@ export const TopBanner = () => {
   const message = 'Free express shipping with orders over $150 — SHOP NOW';
 
   return (
-    <div className="w-full overflow-hidden bg-canvas-text-contrast text-canvas-on-canvas py-2 text-sm whitespace-nowrap">
+    <div className="w-full overflow-hidden bg-canvas-text-contrast text-canvas-on-canvas py-2 text-sm">
       <motion.div
-        className="flex gap-16 animate-marquee"
-        initial={{ x: '100%' }}
-        animate={{ x: '-100%' }}
+        className="flex w-max"
+        animate={{ x: ['0%', '-50%'] }}
         transition={{
           repeat: Infinity,
-          duration: 60,
+          duration: 40, 
           ease: 'linear',
         }}
       >
         
         {[...Array(10)].map((_, i) => (
-          <span key={i} className="font-medium">
+          <span key={i} className="inline-block px-8 font-medium whitespace-nowrap">
             {message}
           </span>
         ))}

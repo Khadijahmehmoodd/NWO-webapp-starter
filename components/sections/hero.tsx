@@ -21,7 +21,7 @@ export default function Hero() {
         <h1 className="text-canvas-on-canvas text-3xl sm:text-5xl md:text-6xl font-bold max-w-[90%] sm:max-w-3xl leading-tight py-3">
           Jewelry is a way of keeping memories alive
         </h1>
-        <button className="mt-4 px-6 py-3 bg-canvas-on-canvas text-canvas-text-contrast font-semibold rounded-full hover:bg-canvas-border-hover transition">
+        <button className="mt-4 px-6 py-3 bg-canvas-on-canvas text-canvas-text-contrast font-semibold rounded-full hover:bg-primary-border transition">
           SHOP NOW →
         </button>
       </div>
