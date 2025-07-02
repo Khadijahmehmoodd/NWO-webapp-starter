@@ -13,11 +13,11 @@ export const TopBanner = () => {
         animate={{ x: '-100%' }}
         transition={{
           repeat: Infinity,
-          duration: 15,
+          duration: 60,
           ease: 'linear',
         }}
       >
-        {/* Repeat the message enough times to fill large screens */}
+        
         {[...Array(10)].map((_, i) => (
           <span key={i} className="font-medium">
             {message}

@@ -135,7 +135,7 @@ export default function MiddleBanner() {
   return (
     <>
       <div className="w-full h-16 px-4 sm:px-6 md:px-10 py-3 text-canvas-text-contrast bg-canvas-on-canvas border-b border-canvas-text-contrast flex items-center justify-between">
-        {/* Left - Phone */}
+     
         <div className="hidden md:flex items-center gap-2">
           <PiPhoneLight className="text-lg" />
           <Link href="/contact" className="hover:underline">
@@ -143,14 +143,14 @@ export default function MiddleBanner() {
           </Link>
         </div>
 
-        {/* Center - Logo */}
+      
         <div>
           <Link href="/">
             <Image src="/image/logo.png" alt="Logo" width={60} height={20} />
           </Link>
         </div>
 
-        {/* Right - Nav Icons */}
+       
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-4">
             <div className="flex items-center gap-1">
@@ -171,7 +171,7 @@ export default function MiddleBanner() {
             </div>
           </div>
 
-          {/* Mobile Menu Button */}
+          
           <div className="md:hidden">
             <button
               aria-label="Toggle Menu"
@@ -188,7 +188,7 @@ export default function MiddleBanner() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
+     
       <AnimatePresence>
         {menuOpen && (
           <motion.div
