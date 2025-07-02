@@ -39,7 +39,7 @@ export default function CollectionsSection() {
 
   useEffect(() => {
     const checkIsMobile = () => {
-      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+      setIsMobile(window.innerWidth < 1024); 
     };
 
     checkIsMobile();
@@ -79,7 +79,7 @@ export default function CollectionsSection() {
                 : 'h-[500px]'
             }`}
           >
-            {/* Image Section */}
+            
             <Image
               src={item.image}
               alt={item.title}
@@ -87,11 +87,10 @@ export default function CollectionsSection() {
               className="object-cover"
             />
 
-            {/* Overlay Content */}
-            <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-white text-center px-6">
+            <div className="absolute inset-0 bg-black/50 flex flex-col justify-center items-center text-canvas-on-canvas text-center px-6">
               <h3 className="text-2xl sm:text-3xl font-semibold mb-4">{item.title}</h3>
               <p className="text-base sm:text-lg max-w-sm">{item.description}</p>
-              <button className="mt-6 px-6 py-2 border border-white rounded-full text-sm font-semibold hover:bg-white hover:text-black transition">
+              <button className="mt-6 px-6 py-2 border border-canvas-on-canvas rounded-full text-sm font-semibold hover:bg-primary-border-hover hover:text-canvas-text-contrast transition">
                 SHOP NOW →
               </button>
             </div>
@@ -99,14 +98,14 @@ export default function CollectionsSection() {
         ))}
       </div>
 
-      {/* Scroll dots for mobile only */}
+  
       {isMobile && (
         <div className="flex justify-center mt-6 space-x-3">
           {cardData.map((_, index) => (
             <span
               key={index}
               className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                index === activeIndex ? 'bg-[#B38E65]' : 'bg-gray-300'
+                index === activeIndex ? 'bg-primary-border-hover' : 'bg-canvas-border-hover'
               }`}
             />
           ))}

@@ -15,13 +15,13 @@ export default function Hero() {
         />
         <div className="absolute inset-0 bg-black/50" />
       </div>
-
+      
       <div className="relative z-10 flex flex-col items-center justify-center h-full px-4 text-center">
-        <p className="text-white text-sm tracking-wide">*ENJOY TOUR 50% OFF</p>
-        <h1 className="text-white text-3xl sm:text-5xl md:text-6xl font-bold max-w-[90%] sm:max-w-3xl leading-tight">
+        <p className="text-canvas-on-canvas tracking-wide text-2xl py-2">*ENJOY TOUR 50% OFF</p>
+        <h1 className="text-canvas-on-canvas text-3xl sm:text-5xl md:text-6xl font-bold max-w-[90%] sm:max-w-3xl leading-tight py-3">
           Jewelry is a way of keeping memories alive
         </h1>
-        <button className="mt-4 px-6 py-3 bg-white text-black font-semibold rounded-full hover:bg-gray-200 transition">
+        <button className="mt-4 px-6 py-3 bg-canvas-on-canvas text-canvas-text-contrast font-semibold rounded-full hover:bg-primary-border transition">
           SHOP NOW →
         </button>
       </div>

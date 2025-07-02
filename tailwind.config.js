@@ -127,5 +127,5 @@ module.exports = {
       },
     },
   },
-  plugins: [import('tailwindcss-animate'), import('tailwind-scrollbar-hide')],
+  plugins: [import('tailwindcss-animate'), import('tailwind-scrollbar-hide'), import('tailwind-scrollbar-hide')],
 };

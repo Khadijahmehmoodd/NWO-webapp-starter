@@ -10,7 +10,7 @@ import product5 from '@/public/image/flower-necklace.png';
 
 const products = [
   {
-    title: 'Essential Swarovski Necklace, Sliver Color',
+    title: 'Essential Swarovski Necklace, Silver Color',
     price: '$400.00',
     image: product1,
   },
@@ -57,9 +57,9 @@ export default function NewCollectionsSection() {
 
   return (
     <section className="w-full px-4 py-16">
-      <div className="max-w-7xl mx-auto flex justify-between items-center mb-6 px-2">
+      <div className="max-w-7xl mx-auto flex justify-between items-center mb-6 px-4">
         <h2 className="text-2xl md:text-4xl font-bold text-canvas-text-contrast">
-          OUR NEW IN PRODUCTS
+         NECKLACE
         </h2>
 
         <button className="hidden sm:inline-block border border-canvas-text-contrast rounded-full px-5 py-2 text-sm hover:bg-canvas-text-contrast hover:text-canvas-on-canvas transition">
@@ -71,12 +71,12 @@ export default function NewCollectionsSection() {
         </button>
       </div>
 
-      <div className="relative">
+      <div className="max-w-7xl mx-auto px-4">
         <div
           ref={scrollRef}
           className="
             flex gap-4 overflow-x-auto sm:overflow-visible no-scrollbar 
-            scroll-snap-x scroll-snap-mandatory px-2 pb-6
+            scroll-snap-x scroll-snap-mandatory pb-6
             sm:grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5
           "
         >
@@ -87,11 +87,10 @@ export default function NewCollectionsSection() {
                 scroll-snap-start
                 bg-canvas-on-canvas rounded-md p-4 flex-shrink-0 cursor-pointer
                 group transition duration-300
-                flex flex-col justify-between h-[360px] w-full max-w-[300px]
+                flex flex-col justify-between h-[360px] w-full max-w-[300px] mx-auto
               "
             >
-            
-              <div className="w-full h-[220px] flex items-center justify-center bg-">
+              <div className="w-full h-[220px] flex items-center justify-center bg-primary-bg">
                 <Image
                   src={item.image}
                   alt={item.title}
@@ -101,7 +100,6 @@ export default function NewCollectionsSection() {
                 />
               </div>
 
-              
               <div className="mt-4 flex flex-col justify-between flex-1">
                 <h3 className="text-sm font-medium text-canvas-text-contrast leading-tight">
                   {item.title}
@@ -111,13 +109,11 @@ export default function NewCollectionsSection() {
                 </p>
               </div>
 
-             
               <div className="mt-4 h-[2px] w-1/2 rounded-full bg-primary-text group-hover:w-full transition-all duration-300"></div>
             </div>
           ))}
         </div>
 
-        
         <div className="sm:hidden h-[2px] rounded-full w-full overflow-hidden mt-2 bg-canvas-on-canvas">
           <div
             className="h-[2px] rounded-full bg-primary-text transition-all duration-300"
@@ -128,4 +124,3 @@ export default function NewCollectionsSection() {
     </section>
   );
 }
-
