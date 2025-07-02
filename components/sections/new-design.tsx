@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import newDesign from '@/public/image/new-design.jpg';
 import locketSet from '@/public/image/locket-set.png';
 import { ArrowRight } from 'lucide-react';
@@ -10,8 +11,14 @@ export default function NewDesignSection() {
     <section className="w-full px-4 md:px-16 lg:px-20 py-20">
       <div className="flex flex-col lg:flex-row items-center lg:items-start gap-10">
 
-    
-        <div className="w-full lg:w-[33%] aspect-square relative overflow-hidden rounded-md">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut' }}
+          viewport={{ amount: 0.2 }}
+          whileHover={{ scale: 1.02 }}
+          className="w-full lg:w-[33%] aspect-square relative overflow-hidden rounded-md"
+        >
           <Image
             src={newDesign}
             alt="New Design"
@@ -19,9 +26,9 @@ export default function NewDesignSection() {
             className="object-cover"
             priority
           />
-        </div>
+        </motion.div>
 
-      
+        
         <div className="w-full lg:w-[40%] text-center lg:text-left space-y-4">
           <p className="text-primary-text text-base font-medium">New Design</p>
 
@@ -44,9 +51,19 @@ export default function NewDesignSection() {
           </button>
         </div>
 
-   
-        <div className="w-full lg:w-[27%] flex flex-col items-center text-center p-4 rounded-md">
-          <div className=" bg-primary-bg w-full aspect-square flex items-center justify-center rounded-md">
+        {/* Right Product - Scroll In */}
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
+          viewport={{ amount:0.3 }}
+          className="w-full lg:w-[25%] flex flex-col items-center"
+        >
+          <motion.div
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-primary-bg w-full aspect-square flex items-center justify-center rounded-md transition-transform"
+          >
             <Image
               src={locketSet}
               alt="Beaded white pearl necklace"
@@ -55,16 +72,17 @@ export default function NewDesignSection() {
               className="object-contain"
               priority
             />
-          </div>
+          </motion.div>
 
-          <p className="text-sm text-canvas-text-contrast mt-3">
-            Diamond Necklace,<br />Sliver Color
+          <p className="text-sm text-canvas-text-contrast mt-3 text-center">
+            Diamond Necklace,<br />Silver Color
           </p>
-          <p className="text-sm font-semibold text-canvas-text-contrast mt-1">$400.00</p>
-        </div>
+          <p className="text-sm font-semibold text-canvas-text-contrast mt-1 text-center">
+            $400.00
+          </p>
+        </motion.div>
 
       </div>
     </section>
   );
 }
-

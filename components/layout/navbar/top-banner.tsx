@@ -1,5 +1,29 @@
-export const TopBanner = () => (
-  <div className="w-full bg-canvas-text-contrast text-white text-sm text-center py-2">
-    Free express shipping with orders over $150 <strong>SHOP NOW</strong>
-  </div>
-);
+'use client';
+
+import { motion } from 'framer-motion';
+
+export const TopBanner = () => {
+  const message = 'Free express shipping with orders over $150 — SHOP NOW';
+
+  return (
+    <div className="w-full overflow-hidden bg-canvas-text-contrast text-canvas-on-canvas py-2 text-sm whitespace-nowrap">
+      <motion.div
+        className="flex gap-16 animate-marquee"
+        initial={{ x: '100%' }}
+        animate={{ x: '-100%' }}
+        transition={{
+          repeat: Infinity,
+          duration: 15,
+          ease: 'linear',
+        }}
+      >
+        {/* Repeat the message enough times to fill large screens */}
+        {[...Array(10)].map((_, i) => (
+          <span key={i} className="font-medium">
+            {message}
+          </span>
+        ))}
+      </motion.div>
+    </div>
+  );
+};

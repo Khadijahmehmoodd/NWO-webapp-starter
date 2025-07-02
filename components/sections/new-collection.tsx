@@ -87,13 +87,13 @@ export default function NewCollectionsSection() {
                   cursor-pointer group transition duration-300
                 "
               >
-                <div className="w-full h-[200px] flex items-center justify-center bg-primary-bg">
+                <div className="w-full h-[100px] flex items-center justify-center bg-primary-bg">
                   <Image
                     src={item.image}
                     alt={item.title}
                     width={180}
                     height={180}
-                    className="object-contain w-[180px] h-[180px]"
+                    className="object-contain w-[180px] h-[100px]"
                   />
                 </div>
 
@@ -118,3 +118,4 @@ export default function NewCollectionsSection() {
     </section>
   );
 }
+
