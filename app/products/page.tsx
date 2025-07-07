@@ -33,7 +33,7 @@ export default function ProductsPage() {
         </a>
 
       </div>
-      <ProductList products={products} />
+      <ProductList />
     </div>
   );
 }
