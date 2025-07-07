@@ -1,13 +1,13 @@
 import { Hero, CollectionsSection, NewCollectionsSection, NecklaceSection, GiftSection, NewDesignSection, ServicesSection, GallerySection } from '@/components/sections';
-// import {
-//   getProducts,
-//   getSubscription,
-//   getUser,
-// } from '@/lib/utils/supabase/queries';
-// import { createClient } from '@/lib/utils/supabase/server';
+import {
+  getProducts,
+  getSubscription,
+  getUser,
+} from '@/lib/utils/supabase/queries';
+import { createClient } from '@/lib/utils/supabase/server';
 // import { Tables } from '@/types_db';
 
-// Remove line 10 to 53 when dealing with the real data. Replace <OurPlan /> with the following:
+// // Remove line 10 to 53 when dealing with the real data. Replace <OurPlan /> with the following:
 // <OurPlan user={user} subscription={subscription} products={products ?? []} />
 
 // type Price = Tables<'prices'>;
@@ -53,12 +53,12 @@ import { Hero, CollectionsSection, NewCollectionsSection, NecklaceSection, GiftS
 // ];
 
 export default async function HomePage() {
-  // const supabase = await createClient();
-  // const [user, subscription, products] = await Promise.all([
-  //   getUser(supabase),
-  //   getSubscription(supabase),
-  //   getProducts(supabase),
-  // ]);
+  const supabase = await createClient();
+  const [user, subscription, products] = await Promise.all([
+    getUser(supabase),
+    getSubscription(supabase),
+    getProducts(supabase),
+  ]);
 
   return (
     <div className='bg-canvas-on-canvas'>

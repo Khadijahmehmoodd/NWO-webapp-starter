@@ -5,17 +5,7 @@ import MiddleBanner from './middle-banner';
 import MainMenu from './nav-links';
 
 export default async function Navbar () {
-  // const supabase = await createClient();
-
-  // const {
-  //   data: { user },
-  // } = await supabase.auth.getUser();
-
-  // return (
-  //   <>
-  //     <NavLinks user={user} />
-  //   </>
-  // );
+  
   return(
     <>
       

@@ -8,6 +8,7 @@ import { Button, PasswordInput, PasswordValidation } from '@/components/ui';
 
 interface UpdatePasswordProps {
   redirectMethod: string;
+   redirectTo: string; 
 }
 
 type TVisibilityField = 'password' | 'passwordConfirm';

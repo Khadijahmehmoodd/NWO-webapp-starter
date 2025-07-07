@@ -11,6 +11,7 @@ import { Button, Input, Label, PasswordInput } from '@/components/ui';
 interface PasswordSignInProps {
   allowEmail: boolean;
   redirectMethod: string;
+   redirectTo: string; 
 }
 
 export const PasswordSignIn = ({

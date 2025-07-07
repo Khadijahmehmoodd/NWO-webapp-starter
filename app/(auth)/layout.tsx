@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toasts/toaster';
 import { Archivo } from 'next/font/google';
 import { getURL } from '@/lib/utils/helpers';
 import NextTopLoader from 'nextjs-toploader';
+import { Footer, Navbar } from '@/components/layout';
 
 const archivo = Archivo({
   subsets: ['latin'],
@@ -61,9 +62,11 @@ export default async function RootLayout({ children }: PropsWithChildren) {
           id='skip'
           className='md:min-h[calc(100dvh-5rem)] min-h-[calc(100dvh-4rem)]'
         >
+          <Navbar/>
           {children}
         </main>
         <Suspense>
+          <Footer/>
           <Toaster />
         </Suspense>
       </body>

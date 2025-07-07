@@ -2,7 +2,7 @@ import { toDateTime } from '@/lib/utils/helpers';
 import { stripe } from '@/lib/utils/stripe/config';
 import { createClient } from '@supabase/supabase-js';
 import Stripe from 'stripe';
-import type { Database, Tables, TablesInsert } from 'types_db';
+import type { Database, Tables } from 'types_db';
 
 type Product = Tables<'products'>;
 type Price = Tables<'prices'>;
@@ -229,7 +229,7 @@ const manageSubscriptionStatusChange = async (
     expand: ['default_payment_method'],
   });
   // Upsert the latest status of the subscription object.
-  const subscriptionData: TablesInsert<'subscriptions'> = {
+  const subscriptionData = {
     id: subscription.id,
     user_id: uuid,
     metadata: subscription.metadata,

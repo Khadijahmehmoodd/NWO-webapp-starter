@@ -12,6 +12,7 @@ interface EmailSignInProps {
   allowPassword: boolean;
   redirectMethod: string;
   disableButton?: boolean;
+   redirectTo: string; 
 }
 
 export default function EmailSignIn ({
@@ -60,7 +61,7 @@ export default function EmailSignIn ({
         </div>
       </form>
       {allowPassword && (
-        <div className='flex flex-col gap-1 py-4 text-sm text-center text-canvas-text'>
+        <div className='flex flex-col gap-1 py-4 text-sm text-center text-canvas-text-contrast'>
           <Link href='/signin/password_signin' className='hover:underline'>
             Sign in with email and password
           </Link>

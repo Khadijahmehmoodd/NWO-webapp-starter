@@ -13,10 +13,11 @@ import {
   PasswordInput,
 } from '@/components/ui';
 
-// Define prop type with allowEmail boolean
+
 interface SignUpProps {
   allowEmail: boolean;
   redirectMethod: string;
+  redirectTo?: string;
 }
 
 export default function SignUp ({ allowEmail, redirectMethod }: SignUpProps) {
@@ -50,7 +51,7 @@ export default function SignUp ({ allowEmail, redirectMethod }: SignUpProps) {
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    setIsSubmitting(true); // Disable the button while the request is being handled
+    setIsSubmitting(true); 
     await handleRequest(e, signUp, router);
     setIsSubmitting(false);
   };
@@ -58,7 +59,7 @@ export default function SignUp ({ allowEmail, redirectMethod }: SignUpProps) {
   return (
     <>
       <form onSubmit={(e) => handleSubmit(e)}>
-        <div className='flex flex-col gap-6 lg:gap-5'>
+        <div className='flex flex-col gap-6 lg:gap-5 '>
           <div className='flex flex-col gap-6 lg:gap-5'>
             <div className='flex flex-col gap-1.5 pt-3 lg:p-0'>
               <Label htmlFor='email'>Email</Label>
@@ -84,6 +85,7 @@ export default function SignUp ({ allowEmail, redirectMethod }: SignUpProps) {
               onToggleVisibility={() =>
                 setIsPasswordVisible(!isPasswordVisible)
               }
+            
             />
           </div>
           {passwordTouched && (
@@ -112,7 +114,7 @@ export default function SignUp ({ allowEmail, redirectMethod }: SignUpProps) {
           </Button>
         </div>
       </form>
-      <div className='flex flex-col gap-1 py-4 text-sm text-center text-canvas-text'>
+      <div className='flex flex-col gap-1 py-4 text-sm text-center text-canvas-text-contrast'>
         <p>
           Already have an account?{' '}
           <Link href='/signin/password_signin' className='hover:underline'>

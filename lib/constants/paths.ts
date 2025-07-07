@@ -7,7 +7,7 @@ export const paths = {
   },
   home: '/',
   user: {
-    dashboard: '/account',
+    dashboard: '/products', // ← ✅ Update from '/account' to '/products'
   },
   resources: {
     privacyPolicy: '/privacy-policy',

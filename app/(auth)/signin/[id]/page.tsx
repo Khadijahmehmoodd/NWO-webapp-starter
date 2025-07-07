@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Button, Card, Logo } from '@/components/ui';
 import { createClient } from '@/lib/utils/supabase/server';
@@ -18,34 +19,35 @@ import Separator from '@/components/ui/auth-forms/separator';
 import OauthSignIn from '@/components/ui/auth-forms/o-auth-signin';
 import Link from 'next/link';
 
-interface SignInPageProps {
+export default async function SignIn({
+  params,
+  searchParams,
+}: {
   params: Promise<{ id: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-export default async function SignIn({ params, searchParams }: SignInPageProps) {
-  const { id } = await params;
-  const queryParams = searchParams ? await searchParams : {};
-
+  searchParams: Promise<{ disable_button: boolean }>;
+}) {
   const { allowOauth, allowEmail, allowPassword } = getAuthTypes();
   const viewTypes = getViewTypes();
   const redirectMethod = getRedirectMethod();
 
-  const disableButton =
-    queryParams?.disable_button === 'true' || queryParams?.disable_button === '1';
-
+  // Declare 'viewProp' and initialize with the default value
   let viewProp: string;
 
+  // Assign url id to 'viewProp' if it's a valid string and ViewTypes includes it
+  const { id } = await params;
+  const awaitedSearchParams = await searchParams;
   if (typeof id === 'string' && viewTypes.includes(id)) {
     viewProp = id;
   } else {
-    const cookieStore = await cookies();
-    const preferredSignInView = cookieStore.get('preferredSignInView')?.value || null;
+    const preferredSignInView =
+      (await cookies()).get('preferredSignInView')?.value || null;
     viewProp = getDefaultSignInView(preferredSignInView);
     return redirect(`/signin/${viewProp}`);
   }
 
+  // Check if the user is already logged in and redirect to the account page if so
   const supabase = await createClient();
+
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -58,42 +60,39 @@ export default async function SignIn({ params, searchParams }: SignInPageProps) 
 
   return (
     <>
-      <nav className="fixed top-0 right-0 p-6">
+      {/* <nav className='fixed top-0 right-0 p-6'>
         {viewProp === 'signup' ? (
-          <Link href="/signin">
-            <Button color="gray" variant="ghost" size="small">
+          <Link href='/signin'>
+            <Button color='gray' variant='ghost' size='small'>
               Login
             </Button>
           </Link>
         ) : viewProp !== 'update_password' &&
           viewProp !== 'forgot_password' &&
           viewProp !== 'reset_password' ? (
-            <Link href="/signin/signup">
-              <Button color="gray" variant="ghost" size="small">
+            <Link href='/signin/signup'>
+              <Button color='gray' variant='ghost' size='small'>
               Register
               </Button>
             </Link>
           ) : null}
-      </nav>
-
+      </nav> */}
       {viewProp === 'forgot_password' || viewProp === 'update_password' ? (
-        <nav className="fixed top-0 p-5">
-          <Link href="/">
-            <Logo width="64px" height="64px" />
+        <nav className='fixed top-0 p-2'>
+          <Link href='/'>
+            {/* <Logo width='64px' height='64px' /> */}
           </Link>
         </nav>
       ) : null}
-
-      <div className="flex flex-col items-center justify-between w-full h-screen lg:pt-48">
-        <div className="flex flex-col max-w-lg gap-12 lg:w-96">
+      <div className='flex flex-col items-center justify-start w-full min-h-screen py-10'>
+        <div className='flex flex-col max-w-lg gap-12 lg:w-96'>
           {viewProp !== 'forgot_password' && viewProp !== 'update_password' ? (
-            <div className="flex justify-center">
-              <Link href="/">
-                <Logo width="64px" height="64px" />
+            <div className='flex justify-center'>
+              <Link href='/'>
+                {/* <Logo width='64px' height='64px' /> */}
               </Link>
             </div>
           ) : null}
-
           <Card
             title={
               viewProp === 'forgot_password'
@@ -101,17 +100,19 @@ export default async function SignIn({ params, searchParams }: SignInPageProps) 
                 : viewProp === 'update_password'
                   ? 'Update Password'
                   : viewProp === 'signup'
-                    ? 'Welcome to App'
+                    ? 'Welcome to Jewels'
                     : 'Sign In'
             }
             description={
               viewProp === 'signup'
                 ? "Get started by creating an account. It's free."
-                : viewProp === 'reset_password' || viewProp === 'forgot_password'
+                : viewProp === 'reset_password'
                   ? "Don't worry, we'll send you a message to help you reset your password."
-                  : viewProp === 'update_password'
-                    ? 'Please set a new password for your account'
-                    : 'Login to continue to the app.'
+                  : viewProp === 'forgot_password'
+                    ? "Don't worry, we'll send you a message to help you reset your password."
+                    : viewProp === 'update_password'
+                      ? 'Please set a new password for your account'
+                      : 'Login to continue to the app.'
             }
           >
             <div>
@@ -120,37 +121,35 @@ export default async function SignIn({ params, searchParams }: SignInPageProps) 
                 allowOauth && (
                 <>
                   <OauthSignIn />
-                  <Separator text="OR" />
+                  <Separator text='OR' />
                 </>
               )}
-
               {viewProp === 'password_signin' && (
                 <PasswordSignIn
                   allowEmail={allowEmail}
                   redirectMethod={redirectMethod}
+                  redirectTo="/product"
                 />
               )}
-
               {viewProp === 'email_signin' && (
                 <EmailSignIn
                   allowPassword={allowPassword}
                   redirectMethod={redirectMethod}
-                  disableButton={disableButton}
+                  disableButton={awaitedSearchParams.disable_button}
+                  redirectTo="/product"
                 />
               )}
-
               {viewProp === 'forgot_password' && (
                 <ForgotPassword
                   allowEmail={allowEmail}
                   redirectMethod={redirectMethod}
-                  disableButton={disableButton}
+                  disableButton={awaitedSearchParams.disable_button}
+                  redirectTo="/product"
                 />
               )}
-
               {viewProp === 'update_password' && (
-                <UpdatePassword redirectMethod={redirectMethod} />
+                <UpdatePassword redirectMethod={redirectMethod} redirectTo="/product" />
               )}
-
               {viewProp === 'signup' && (
                 <SignUp
                   allowEmail={allowEmail}
@@ -160,20 +159,18 @@ export default async function SignIn({ params, searchParams }: SignInPageProps) 
             </div>
           </Card>
         </div>
-
-        <div>
-          <p className="py-4 text-xs text-canvas-text">
+        {/* <div>
+          <p className='py-4 text-xs text-canvas-text'>
             By continuing, you agree to our{' '}
-            <Link href="/terms-of-service" className="text-canvas-text-contrast">
-              Terms of services
-            </Link>{' '}
-            and{' '}
-            <Link href="/privacy-policy" className="text-canvas-text-contrast">
-              Privacy Policy
+            <Link href='/terms-of-service' className='text-canvas-text-contrast'>
+              Terms of services{' '}
             </Link>
-            .
+            and{' '}
+            <Link href='/privacy-policy' className='text-canvas-text-contrast'>
+              Privacy Policy.
+            </Link>
           </p>
-        </div>
+        </div> */}
       </div>
     </>
   );

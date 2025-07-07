@@ -143,3 +143,37 @@ create policy "Can only view own subs data." on subscriptions for select using (
  */
 drop publication if exists supabase_realtime;
 create publication supabase_realtime for table products, prices;
+
+
+-- USER PRODUCTS TABLE
+create table public.user_products (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid references auth.users not null,
+  name text not null,
+  description text,
+  price numeric(10,2) not null,
+  image_url text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+alter table public.user_products enable row level security;
+
+create policy "Allow public read access"
+on public.user_products
+for select
+using (true);
+
+create policy "Allow insert for authenticated users"
+on public.user_products
+for insert
+with check (auth.uid() = user_id);
+
+create policy "Allow update for product owner"
+on public.user_products
+for update
+using (auth.uid() = user_id);
+
+create policy "Allow delete for product owner"
+on public.user_products
+for delete
+using (auth.uid() = user_id);
