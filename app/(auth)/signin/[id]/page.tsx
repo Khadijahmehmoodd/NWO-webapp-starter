@@ -1,34 +1,36 @@
+
 import React from 'react';
-import { Button, Card, Logo } from '@/components/ui';
+import { Card } from '@/components/ui';
 import { createClient } from '@/lib/utils/supabase/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { paths } from '@/lib/constants/paths';
 import {
   getAuthTypes,
   getViewTypes,
   getDefaultSignInView,
   getRedirectMethod,
 } from '@/lib/utils/auth-helpers/settings';
+
 import { PasswordSignIn } from '@/components/ui/auth-forms/password-signin';
 import EmailSignIn from '@/components/ui/auth-forms/email-signin';
 import ForgotPassword from '@/components/ui/auth-forms/forgot-password';
 import UpdatePassword from '@/components/ui/auth-forms/update-password';
-import SignUp from '@/components/ui/auth-forms/signup';
 import Separator from '@/components/ui/auth-forms/separator';
 import OauthSignIn from '@/components/ui/auth-forms/o-auth-signin';
-import Link from 'next/link';
 
-interface SignInPageProps {
-  params: Promise<{ id: string }>;
-  searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
-}
-
-export default async function SignIn({ params, searchParams }: SignInPageProps) {
-  const { id } = await params;
-  const queryParams = searchParams ? await searchParams : {};
+export default async function SignIn({
+  params,
+  searchParams,
+}: {
+  params: { id: string };
+  searchParams: { [key: string]: string | string[] | undefined };
+}) {
+  const { id } = params;
+  const queryParams = searchParams;
 
   const { allowOauth, allowEmail, allowPassword } = getAuthTypes();
-  const viewTypes = getViewTypes();
+  const viewTypes = getViewTypes().filter((v) => v !== 'signup');
   const redirectMethod = getRedirectMethod();
 
   const disableButton =
@@ -36,145 +38,115 @@ export default async function SignIn({ params, searchParams }: SignInPageProps) 
 
   let viewProp: string;
 
+  
   if (typeof id === 'string' && viewTypes.includes(id)) {
     viewProp = id;
   } else {
-    const cookieStore = await cookies();
+    const cookieStore = await cookies(); 
     const preferredSignInView = cookieStore.get('preferredSignInView')?.value || null;
     viewProp = getDefaultSignInView(preferredSignInView);
-    return redirect(`/signin/${viewProp}`);
+
+    if (viewProp === 'signup') viewProp = 'password_signin';
+    return redirect(`${paths.auth.signin}/${viewProp}`);
   }
+
 
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
+ 
   if (user && viewProp !== 'update_password') {
-    return redirect('/');
-  } else if (!user && viewProp === 'update_password') {
-    return redirect('/signin');
+    return redirect(paths.user.dashboard); 
   }
 
+  if (!user && viewProp === 'update_password') {
+    return redirect(paths.auth.signin);
+  }
+
+ 
+  let productId: string | null = null;
+  if (user) {
+    const { data: product } = await supabase
+      .from('user_products')
+      .select('id')
+      .eq('user_id', user.id)
+      .limit(1)
+      .single();
+
+    productId = product?.id ?? null;
+  }
+
+ 
   return (
-    <>
-      <nav className="fixed top-0 right-0 p-6">
-        {viewProp === 'signup' ? (
-          <Link href="/signin">
-            <Button color="gray" variant="ghost" size="small">
-              Login
-            </Button>
-          </Link>
-        ) : viewProp !== 'update_password' &&
-          viewProp !== 'forgot_password' &&
-          viewProp !== 'reset_password' ? (
-            <Link href="/signin/signup">
-              <Button color="gray" variant="ghost" size="small">
-              Register
-              </Button>
-            </Link>
-          ) : null}
-      </nav>
+    <div className="min-h-screen w-full flex items-center justify-center px-4 py-12">
+      <div className="w-full max-w-lg">
+        <Card
+          className="bg-canvas-bg-active"
+          title={
+            viewProp === 'forgot_password'
+              ? 'Forgot your password?'
+              : viewProp === 'update_password'
+                ? 'Update Password'
+                : 'Welcome to Jewels. Sign In'
+          }
+          description={
+            viewProp === 'forgot_password'
+              ? "Don't worry, we'll send you a message to help you reset your password."
+              : viewProp === 'update_password'
+                ? 'Please set a new password for your account'
+                : 'Login to continue to the app.'
+          }
+        >
+          <div>
+          
+            {viewProp !== 'update_password' && viewProp !== 'forgot_password' && allowOauth && (
+              <>
+                <OauthSignIn redirectTo={paths.user.dashboard} />
+                <Separator text="OR" />
+              </>
+            )}
 
-      {viewProp === 'forgot_password' || viewProp === 'update_password' ? (
-        <nav className="fixed top-0 p-5">
-          <Link href="/">
-            <Logo width="64px" height="64px" />
-          </Link>
-        </nav>
-      ) : null}
+          
+            {viewProp === 'password_signin' && (
+              <PasswordSignIn
+                allowEmail={allowEmail}
+                redirectMethod={redirectMethod}
+                redirectTo={paths.user.dashboard}
+              />
+            )}
 
-      <div className="flex flex-col items-center justify-between w-full h-screen lg:pt-48">
-        <div className="flex flex-col max-w-lg gap-12 lg:w-96">
-          {viewProp !== 'forgot_password' && viewProp !== 'update_password' ? (
-            <div className="flex justify-center">
-              <Link href="/">
-                <Logo width="64px" height="64px" />
-              </Link>
-            </div>
-          ) : null}
+       
+            {viewProp === 'email_signin' && (
+              <EmailSignIn
+                allowPassword={allowPassword}
+                redirectMethod={redirectMethod}
+                disableButton={disableButton}
+                redirectTo={paths.user.dashboard}
+              />
+            )}
 
-          <Card
-            title={
-              viewProp === 'forgot_password'
-                ? 'Forgot your password?'
-                : viewProp === 'update_password'
-                  ? 'Update Password'
-                  : viewProp === 'signup'
-                    ? 'Welcome to App'
-                    : 'Sign In'
-            }
-            description={
-              viewProp === 'signup'
-                ? "Get started by creating an account. It's free."
-                : viewProp === 'reset_password' || viewProp === 'forgot_password'
-                  ? "Don't worry, we'll send you a message to help you reset your password."
-                  : viewProp === 'update_password'
-                    ? 'Please set a new password for your account'
-                    : 'Login to continue to the app.'
-            }
-          >
-            <div>
-              {viewProp !== 'update_password' &&
-                viewProp !== 'forgot_password' &&
-                allowOauth && (
-                <>
-                  <OauthSignIn />
-                  <Separator text="OR" />
-                </>
-              )}
+            
+            {viewProp === 'forgot_password' && (
+              <ForgotPassword
+                allowEmail={allowEmail}
+                redirectMethod={redirectMethod}
+                disableButton={disableButton}
+                redirectTo={paths.user.dashboard}
+              />
+            )}
 
-              {viewProp === 'password_signin' && (
-                <PasswordSignIn
-                  allowEmail={allowEmail}
-                  redirectMethod={redirectMethod}
-                />
-              )}
-
-              {viewProp === 'email_signin' && (
-                <EmailSignIn
-                  allowPassword={allowPassword}
-                  redirectMethod={redirectMethod}
-                  disableButton={disableButton}
-                />
-              )}
-
-              {viewProp === 'forgot_password' && (
-                <ForgotPassword
-                  allowEmail={allowEmail}
-                  redirectMethod={redirectMethod}
-                  disableButton={disableButton}
-                />
-              )}
-
-              {viewProp === 'update_password' && (
-                <UpdatePassword redirectMethod={redirectMethod} />
-              )}
-
-              {viewProp === 'signup' && (
-                <SignUp
-                  allowEmail={allowEmail}
-                  redirectMethod={redirectMethod}
-                />
-              )}
-            </div>
-          </Card>
-        </div>
-
-        <div>
-          <p className="py-4 text-xs text-canvas-text">
-            By continuing, you agree to our{' '}
-            <Link href="/terms-of-service" className="text-canvas-text-contrast">
-              Terms of services
-            </Link>{' '}
-            and{' '}
-            <Link href="/privacy-policy" className="text-canvas-text-contrast">
-              Privacy Policy
-            </Link>
-            .
-          </p>
-        </div>
+            
+            {viewProp === 'update_password' && (
+              <UpdatePassword
+                redirectMethod={redirectMethod}
+                redirectTo={productId ? `/products/${productId}` : paths.user.dashboard}
+              />
+            )}
+          </div>
+        </Card>
       </div>
-    </>
+    </div>
   );
 }

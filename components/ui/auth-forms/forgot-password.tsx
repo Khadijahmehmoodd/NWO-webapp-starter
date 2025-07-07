@@ -12,6 +12,7 @@ interface ForgotPasswordProps {
   allowEmail: boolean;
   redirectMethod: string;
   disableButton?: boolean;
+   redirectTo: string; 
 }
 
 export default function ForgotPassword ({
