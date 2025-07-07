@@ -27,7 +27,6 @@ export default function CollectionsSection() {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
-
   const handleScroll = () => {
     const el = scrollRef.current;
     if (!el) return;
@@ -41,7 +40,6 @@ export default function CollectionsSection() {
     const checkIsMobile = () => {
       setIsMobile(window.innerWidth < 1024); 
     };
-
     checkIsMobile();
     window.addEventListener('resize', checkIsMobile);
     return () => window.removeEventListener('resize', checkIsMobile);
@@ -58,8 +56,7 @@ export default function CollectionsSection() {
     <section className="w-full px-4 py-16">
       <h2 className="text-center max-w-[1280px] mx-auto text-canvas-text-contrast font-poppins text-2xl sm:text-4xl font-medium leading-[40px] tracking-[0.005em] mb-10">
         Lorem ipsum dolor sit amet consectetur. Bibendum eget pretium neque in
-        adipiscing. Hendrerit ultricies turpis sed suspendisse ut. Non urna
-        senectus arcu id sed aenean.
+        adipiscing. Hendrerit ultricies turpis sed suspendisse ut.
       </h2>
 
       <div
