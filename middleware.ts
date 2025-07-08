@@ -19,30 +19,66 @@
 //   ],
 // };
 
+// import { type NextRequest, NextResponse } from 'next/server';
+// import { createClient } from '@/lib/utils/supabase/middleware';
+
+// export async function middleware(request: NextRequest) {
+//   const { supabase, response } = createClient(request); // ✅ this createClient accepts `request`
+
+//   const {
+//     data: { session },
+//   } = await supabase.auth.getSession();
+
+  
+//   if (session && request.nextUrl.pathname === '/') {
+//     return NextResponse.redirect(new URL('/products', request.url));
+//   }
+
+//   const isProtectedRoute =
+//     request.nextUrl.pathname.startsWith('/products') ||
+//     request.nextUrl.pathname.startsWith('/account');
+
+//   if (!session && isProtectedRoute) {
+//     return NextResponse.redirect(new URL('/', request.url));
+//   }
+
+//   return response; 
+// }
+
+// export const config = {
+//   matcher: [
+//     '/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+//   ],
+// };
 import { type NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/utils/supabase/middleware';
 
 export async function middleware(request: NextRequest) {
-  const { supabase, response } = createClient(request); // ✅ this createClient accepts `request`
+  const { supabase, response } = createClient(request);
 
   const {
     data: { session },
   } = await supabase.auth.getSession();
 
-  
+  // ✅ Redirect authenticated user from "/" → "/products"
   if (session && request.nextUrl.pathname === '/') {
-    return NextResponse.redirect(new URL('/products', request.url));
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = '/products';
+    return NextResponse.redirect(redirectUrl);
   }
 
+  // ✅ Redirect unauthenticated user from protected routes → "/"
   const isProtectedRoute =
     request.nextUrl.pathname.startsWith('/products') ||
     request.nextUrl.pathname.startsWith('/account');
 
   if (!session && isProtectedRoute) {
-    return NextResponse.redirect(new URL('/', request.url));
+    const redirectUrl = request.nextUrl.clone();
+    redirectUrl.pathname = '/';
+    return NextResponse.redirect(redirectUrl);
   }
 
-  return response; 
+  return response;
 }
 
 export const config = {
