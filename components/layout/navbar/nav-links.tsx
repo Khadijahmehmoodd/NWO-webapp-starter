@@ -11,6 +11,7 @@ export default function MainMenu() {
         <Link href="/rings" className="hover:underline">Rings</Link>
         <Link href="/necklaces" className="hover:underline">Necklaces</Link>
         <Link href="/gifts" className="hover:underline">Gifts</Link>
+        <Link href="/login" className="hover:underline">Login</Link>
       </div>
     </nav>
   );

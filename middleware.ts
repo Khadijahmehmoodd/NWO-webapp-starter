@@ -29,12 +29,11 @@ export async function middleware(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  // ✅ Redirect to `/products` if session exists and user is on `/` (login page)
+  
   if (session && request.nextUrl.pathname === '/') {
     return NextResponse.redirect(new URL('/products', request.url));
   }
 
-  // ✅ Redirect to `/` (login) if not logged in and trying to access a protected route
   const isProtectedRoute =
     request.nextUrl.pathname.startsWith('/products') ||
     request.nextUrl.pathname.startsWith('/account');
@@ -43,7 +42,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/', request.url));
   }
 
-  return response; // Always return the response from `createClient`
+  return response; 
 }
 
 export const config = {
