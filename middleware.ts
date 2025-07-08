@@ -60,14 +60,14 @@ export async function middleware(request: NextRequest) {
     data: { session },
   } = await supabase.auth.getSession();
 
-  // ✅ Redirect authenticated user from "/" → "/products"
+  
   if (session && request.nextUrl.pathname === '/') {
     const redirectUrl = request.nextUrl.clone();
     redirectUrl.pathname = '/products';
     return NextResponse.redirect(redirectUrl);
   }
 
-  // ✅ Redirect unauthenticated user from protected routes → "/"
+ 
   const isProtectedRoute =
     request.nextUrl.pathname.startsWith('/products') ||
     request.nextUrl.pathname.startsWith('/account');

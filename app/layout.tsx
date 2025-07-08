@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
     publisher: 'Vercel',
     robots: meta.robots,
     icons: { icon: meta.favicon },
-    metadataBase: new URL(meta.url),
+    metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
     openGraph: {
       url: meta.url,
       title: meta.title,
