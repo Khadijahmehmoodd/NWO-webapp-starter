@@ -128,7 +128,7 @@ export default async function SignIn({
                 <PasswordSignIn
                   allowEmail={allowEmail}
                   redirectMethod={redirectMethod}
-                  redirectTo="/product"
+                  redirectTo="/products"
                 />
               )}
               {viewProp === 'email_signin' && (
@@ -136,7 +136,7 @@ export default async function SignIn({
                   allowPassword={allowPassword}
                   redirectMethod={redirectMethod}
                   disableButton={awaitedSearchParams.disable_button}
-                  redirectTo="/product"
+                  redirectTo="/products"
                 />
               )}
               {viewProp === 'forgot_password' && (
@@ -144,11 +144,11 @@ export default async function SignIn({
                   allowEmail={allowEmail}
                   redirectMethod={redirectMethod}
                   disableButton={awaitedSearchParams.disable_button}
-                  redirectTo="/product"
+                  redirectTo="/products"
                 />
               )}
               {viewProp === 'update_password' && (
-                <UpdatePassword redirectMethod={redirectMethod} redirectTo="/product" />
+                <UpdatePassword redirectMethod={redirectMethod} redirectTo="/products" />
               )}
               {viewProp === 'signup' && (
                 <SignUp
