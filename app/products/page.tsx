@@ -41,13 +41,13 @@ export default function ProductsPage() {
 
   return (
     <div className="p-6">
-      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-20 py-10 mt-10 max-w-[1000px] mx-auto bg-canvas-on-canvas flex justify-between items-center mb-8">
-        <h1 className="text-5xl font-extrabold text-center mt-10 mb-8 text-primary-solid-hover drop-shadow-md transition-all duration-500">
+      <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-20 py-10 mt-10 max-w-[1000px] mx-auto bg-canvas-on-canvas flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-0 mb-8">
+        <h1 className="text-3xl sm:text-5xl font-extrabold text-center sm:text-left text-primary-solid-hover drop-shadow-md transition-all duration-500">
           My Products
         </h1>
         <a
           href="/products/add"
-          className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded text-sm transition mt-10 mb-8 "
+          className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-full text-sm sm:text-base transition"
         >
           + Add Product
         </a>
