@@ -26,7 +26,7 @@ export default function ProductsPage() {
     const { data, error } = await supabase
       .from('user_products')
       .select('*')
-      .eq('user_id', session.user.id); // ✅ filter by logged-in user
+      .eq('user_id', session.user.id);
 
     if (error) {
       console.error('Error fetching user products:', error.message);

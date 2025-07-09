@@ -14,11 +14,11 @@ const archivo = Archivo({
 });
 
 const meta = {
-  title: 'NWO starter template',
-  description: 'Your trusted partner for cutting-edge software solutions.',
+  title: 'Jewels  ',
+  description: 'Your source for stylish and contemporary jewelry.',
   cardImage: '/og.png',
   robots: 'nofollow, noindex',
-  favicon: '/favicon.ico',
+  favicon: '/iconfav.png',
   url: getURL(),
 };
 
@@ -27,8 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
     title: meta.title,
     description: meta.description,
     referrer: 'origin-when-cross-origin',
-    keywords: ['Vercel', 'Supabase', 'Next.js', 'Stripe', 'Subscription'],
-    authors: [{ name: 'Vercel', url: 'https://www.newweborder.co/' }],
+    keywords: ['Khadija', 'Supabase', 'Next.js', 'Stripe', 'Subscription'],
+    authors: [{ name: 'Khadija', url: 'https://jewelry-webapp.vercel.app/' }],
     creator: 'New',
     publisher: 'Vercel',
     robots: meta.robots,
