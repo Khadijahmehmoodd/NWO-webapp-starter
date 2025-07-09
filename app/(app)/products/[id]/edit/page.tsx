@@ -185,6 +185,7 @@ export default function EditProductPage() {
   const [saving, setSaving] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -325,16 +326,39 @@ export default function EditProductPage() {
           />
         </label>
 
-       
         <label className="block mb-6">
           <span className="block text-sm font-medium text-canvas-text-contrast mb-1">Price (USD)</span>
           <input
             type="number"
-            value={product.price || ''}
-            onChange={(e) => setProduct({ ...product, price: Number(e.target.value) })}
+            min="1"
+            value={product.price ?? ''}
+            onChange={(e) => {
+              // Remove any '-' characters and non-digit except dot
+              const sanitized = e.target.value.replace(/[^0-9.]/g, '');
+              const value = Number(sanitized);
+              if (sanitized === '' || isNaN(value)) {
+                setProduct({ ...product, price: 0 });
+                setError(null);
+                return;
+              }
+              if (value <= 0) {
+                setError('Price must be greater than 0');
+              } else if (value < 5) {
+                setError('Price must be at least 5');
+              } else {
+                setError(null);
+              }
+              setProduct({ ...product, price: value });
+            }}
+            placeholder="Enter price (min 5)"
             className="w-full px-4 py-2 border border-canvas-bg-active rounded-md focus:outline-none focus:ring-2 focus:ring-primary-bg"
+            inputMode="decimal"
+            pattern="[0-9]*"
           />
+          {error && <p className="text-sm text-red-600 mt-1">{error}</p>}
         </label>
+      
+
 
       
         <button

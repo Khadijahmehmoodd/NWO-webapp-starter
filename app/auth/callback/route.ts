@@ -42,7 +42,7 @@ import { getErrorRedirect, getStatusRedirect } from '@/lib/utils/helpers';
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url);
   const code = requestUrl.searchParams.get('code');
-  const redirectTo = requestUrl.searchParams.get('redirectTo') || '/products'; // ✅ fallback
+  const redirectTo = requestUrl.searchParams.get('redirectTo') || '/products'; //  fallback
 
   if (code) {
     const supabase = await createClient();
@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
     }
   }
 
-  // ✅ Redirect to intended path or fallback
+  
   return NextResponse.redirect(
     getStatusRedirect(
       `${requestUrl.origin}${redirectTo}`,

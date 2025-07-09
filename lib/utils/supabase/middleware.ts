@@ -47,7 +47,7 @@ export const updateSession = async (request: NextRequest) => {
 
     const url = request.nextUrl.clone();
 
-    // 👇 Redirect to /login if not logged in and trying to access protected pages
+    // Redirect to /login if not logged in and trying to access protected pages
     const protectedPaths = ['/products', '/products/add'];
     const isProtected = protectedPaths.some((path) =>
       url.pathname.startsWith(path),
@@ -58,7 +58,7 @@ export const updateSession = async (request: NextRequest) => {
       return NextResponse.redirect(url);
     }
 
-    // 👇 Redirect to /products if already logged in and accessing /login
+    // Redirect to /products if already logged in and accessing /login
     if (session && url.pathname === '/login') {
       url.pathname = '/products';
       return NextResponse.redirect(url);
