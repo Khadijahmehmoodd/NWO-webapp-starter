@@ -69,11 +69,11 @@ export default function AddProductPage() {
 
   return (
     <main className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-12">
-      <div className="w-full max-w-2xl bg-white p-8 rounded-lg shadow-md">
+      <div className="w-full max-w-2xl bg-canvas-on-canvas p-8 rounded-lg shadow-md">
         <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">Add New Product</h1>
         <form onSubmit={handleSubmit} className="grid gap-5">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Product Name</label>
+            <label className="block text-sm font-medium text-canvas-text-contrast mb-1">Product Name</label>
             <input
               required
               type="text"
@@ -120,7 +120,7 @@ export default function AddProductPage() {
           <button
             type="submit"
             disabled={isSubmitting}
-            className={`w-full py-3 rounded-md text-white font-semibold transition ${
+            className={`w-full py-3 rounded-md text-canvas-on-canvas font-semibold transition ${
               isSubmitting
                 ? 'bg-gray-400 cursor-not-allowed'
                 : 'bg-green-600 hover:bg-green-700'

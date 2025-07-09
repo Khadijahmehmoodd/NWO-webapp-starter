@@ -101,7 +101,9 @@ export default function MiddleBanner() {
               <Link href="/" className="hover:underline">Cart</Link>
             </div>
 
-            {/* 👇 Login / Logout */}
+            
+          </div>
+          <div>
             <Button
               key={renderKey}
               onClick={handleAuthClick}
@@ -125,7 +127,7 @@ export default function MiddleBanner() {
         </div>
       </div>
 
-      {/* Mobile menu */}
+   
       <AnimatePresence>
         {menuOpen && (
           <motion.div
