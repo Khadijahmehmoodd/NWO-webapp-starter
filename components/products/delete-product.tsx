@@ -84,7 +84,7 @@ export default function DeleteProduct({ productId }: { productId: string }) {
       <AlertDialogTrigger asChild>
         <button
           disabled={isDeleting}
-          className={`mt-4 inline-flex items-center justify-center gap-2 text-white px-6 py-3 rounded-full transition ${
+          className={`mt-4 inline-flex items-center justify-center gap-2 text-canvas-on-canvas px-6 py-3 rounded-full transition ${
             isDeleting
               ? 'bg-alert-bg-active cursor-not-allowed'
               : 'bg-red-600 hover:bg-red-700'
